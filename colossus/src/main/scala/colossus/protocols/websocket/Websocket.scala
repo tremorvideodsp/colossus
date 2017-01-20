@@ -1,6 +1,7 @@
 package colossus
 package protocols.websocket
 
+import colossus.metrics.MetricNamespace
 import core._
 import controller._
 import service._
@@ -179,6 +180,7 @@ with UpstreamEventHandler[ControllerUpstream[WebsocketEncoding]] {
   val controllerConfig = ControllerConfig(50, metricsEnabled = true)
   downstream.setUpstream(this)
   def connection = upstream.connection
+  def namespace = downstream.namespace
 
   val incoming = Sink.open[Frame]{frame => 
     frame.header.opcode match {
@@ -226,6 +228,8 @@ trait WebsocketControllerDownstream[E <: Encoding] extends UpstreamEvents with H
 
   def handleError(reason: Throwable)
 
+  def namespace: MetricNamespace
+
 }
 
 
@@ -238,7 +242,9 @@ extends WebsocketControllerDownstream[E] with UpstreamEventHandler[ControllerUps
 
 }
 
-abstract class WebsocketServerHandler[E <: Encoding](serverContext: ServerContext) extends WebsocketHandler[E](serverContext.context)
+abstract class WebsocketServerHandler[E <: Encoding](serverContext: ServerContext) extends WebsocketHandler[E](serverContext.context) {
+  val namespace = serverContext.server.namespace
+}
 
 
 abstract class WebsocketInitializer[E <: Encoding](val worker: WorkerRef) {

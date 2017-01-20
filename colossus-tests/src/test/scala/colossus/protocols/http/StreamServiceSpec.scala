@@ -98,7 +98,7 @@ class StreamServiceSpec extends ColossusSpec with MockFactory with ControllerMoc
       (ctrlr.downstream.incoming _).when().returns(p)
       ctrlr.connected()
       f(ctrlr)
-      (stub.connection.forceDisconnect _).verify()
+      (stub.connection.kill _).verify(*)
     }
 
     "disconnect if head received before end" in expectDisconnect { ctrlr => 

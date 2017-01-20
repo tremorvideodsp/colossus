@@ -25,6 +25,8 @@ trait ControllerMocks extends MockFactory {self: org.scalamock.scalatest.MockFac
     def controllerConfig = config
 
     def context = FakeIOSystem.fakeContext
+
+    def namespace = colossus.metrics.MetricSystem.deadSystem
   }
 
   class TestUpstream[E <: Encoding](val outgoing: Pipe[E#Output, E#Output] = new BufferedPipe[E#Output](2)) extends ControllerUpstream[E] {
