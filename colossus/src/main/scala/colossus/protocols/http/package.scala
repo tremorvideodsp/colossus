@@ -57,8 +57,11 @@ package object http extends HttpBodyEncoders with HttpBodyDecoders {
 
   trait HttpMessage[H <: HttpMessageHead] extends BaseHttpMessage[H, HttpBody]
 
+<<<<<<< HEAD
 
   
+=======
+>>>>>>> streaming-reorganize
 
   /**
    * common methods of both request and response heads
