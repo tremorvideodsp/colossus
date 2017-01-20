@@ -7,8 +7,6 @@ import colossus.parsing.DataSize._
 import core._
 import colossus.streaming._
 
-import scala.concurrent.duration._
-
 /**
  * Configuration for the controller
  *

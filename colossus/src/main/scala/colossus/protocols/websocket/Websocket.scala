@@ -6,14 +6,12 @@ import core._
 import controller._
 import service._
 import streaming.{PushResult, Sink}
-import akka.util.{ByteString, ByteStringBuilder}
+import akka.util.ByteStringBuilder
 
-import java.math.BigInteger
 import java.security.MessageDigest
 import java.util.Random
-import scala.concurrent.duration._
-import scala.util.{Try, Success, Failure}
-import sun.misc.{BASE64Encoder, BASE64Decoder}
+import scala.util.{Success, Failure}
+import sun.misc.BASE64Encoder
 
 object UpgradeRequest {
   import protocols.http._

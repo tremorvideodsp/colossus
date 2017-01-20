@@ -5,7 +5,6 @@ import core._
 import testkit._
 import akka.actor._
 import akka.util.ByteString
-import scala.concurrent.duration._
 import org.scalamock.scalatest.MockFactory
 import colossus.parsing.DataSize._
 import streaming._
