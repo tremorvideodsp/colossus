@@ -17,9 +17,13 @@ Then browse to localhost:4000
 
 ### Publishing
 
-When publishing just run :
+When publishing, merge branch into `gh-pages-source` and then:
 
-`rake site:publish`
+```
+git checkout gh-pages-source
+git pull
+rake site:publish
+```
 
 This will build the site, merge it into the existing `gh-pages` branch, and push the commit
 
