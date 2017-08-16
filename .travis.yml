@@ -17,7 +17,7 @@ cache:
   - $HOME/.sbt/boot/
 
 script:
-- sbt ++$TRAVIS_SCALA_VERSION clean coverage testAll sbt coverageReport sbt coverageAggregate
+- sbt ++$TRAVIS_SCALA_VERSION clean coverage testAll coverageReport coverageAggregate
 
 before_cache:
 - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
