@@ -8,30 +8,24 @@ import com.typesafe.sbt.SbtPgp._
 
 object Publish {
 
-  private val nexus = "https://oss.sonatype.org/"
-  private val snapshots : Option[Resolver] = Some("snapshots" at nexus + "content/repositories/snapshots")
-  private val releases : Option[Resolver] = Some("releases" at nexus + "service/local/staging/deploy/maven2")
-
   lazy val settings: Seq[Setting[_]] = Seq(
     publishMavenStyle := true,
 
-    publishTo := (if(isSnapshot.value) snapshots else releases),
+    publishTo := {
+      val artifactory = "http://artifactory.service.iad1.consul:8081/artifactory/"
+      val (name, url) = if (version.value.contains("-SNAPSHOT"))
+        ("Artifactory Realm", artifactory + "libs-snapshot;build.timestamp=" + new java.util.Date().getTime)
+      else
+        ("Artifactory Realm", artifactory + "libs-release;build.timestamp=" + new java.util.Date().getTime)
+      Some(Resolver.url(name, new URL(url)))
+    },
 
     publishArtifact in Test := false,
 
     pomIncludeRepository := { _ => false },
 
     //credentials could also be just embedded in ~/.sbt/0.13/sonatype.sbt
-    (for {
-      username <- Option(System.getenv("SONATYPE_USERNAME"))
-      password <- Option(System.getenv("SONATYPE_PASSWORD"))
-    } yield
-      credentials += Credentials(
-        "Sonatype Nexus Repository Manager",
-        "oss.sonatype.org",
-        username,
-        password)
-      ).getOrElse(credentials += Credentials(Path.userHome / ".sonatype_credentials")),
+    credentials += Credentials(Path.userHome / ".ivy2" / ".credentials"),
 
     pomExtra := pomExtraGen,
 

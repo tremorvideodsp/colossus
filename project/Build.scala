@@ -7,8 +7,9 @@ import scoverage.ScoverageSbtPlugin.ScoverageKeys._
 
 object ColossusBuild extends Build {
 
-  val AKKA_VERSION            = "2.3.9"
+  val AKKA_VERSION            = "2.4.19"
   val SCALATEST_VERSION       = "2.2.0"
+  val MOCKITO_VERSION         = "1.10.8"
 
   lazy val testAll = TaskKey[Unit]("test-all")
 
@@ -20,7 +21,7 @@ object ColossusBuild extends Build {
     organization := "com.tumblr",
     scalaVersion  := "2.11.8",
     crossScalaVersions := Seq("2.10.6", "2.11.8"),
-    version                   := "0.9.0",
+    version                   := "0.9.0.1-SNAPSHOT",
     parallelExecution in Test := false,
     scalacOptions <<= scalaVersion map { v: String =>
       val default = List(
@@ -41,7 +42,7 @@ object ColossusBuild extends Build {
       "com.typesafe.akka" %% "akka-testkit" % AKKA_VERSION,
       "org.scalatest"     %% "scalatest" % SCALATEST_VERSION % "test, it",
       "org.scalamock" %% "scalamock-scalatest-support" % "3.2.2" % "test",
-      "org.mockito" % "mockito-all" % "1.9.5" % "test",
+      "org.mockito" % "mockito-all" % MOCKITO_VERSION % "test",
       "com.github.nscala-time" %% "nscala-time" % "1.2.0"
     ),
     coverageExcludedPackages := "colossus\\.examples\\..*;.*\\.testkit\\.*"
@@ -62,7 +63,7 @@ object ColossusBuild extends Build {
 
   val ExamplesSettings = Seq (
     libraryDependencies ++= Seq(
-      "org.json4s" %% "json4s-jackson" % "3.3.0"
+      "org.json4s" %% "json4s-jackson" % "3.5.3"
     )
   )
 
